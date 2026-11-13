@@ -5,10 +5,9 @@ from sqlalchemy import pool
 from sqlalchemy.engine import Connection
 from sqlalchemy.ext.asyncio import async_engine_from_config
 
-import geupsikdeul_backend.models  # noqa: F401  (registers models with Base)
 from alembic import context
-from geupsikdeul_backend.core.config import settings
-from geupsikdeul_backend.db.base import Base
+from app.core.config import settings
+from app.db.base import Base
 
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.

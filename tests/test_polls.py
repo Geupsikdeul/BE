@@ -42,7 +42,7 @@ async def test_admin_routes_require_admin(client, student_headers):
 
 async def test_every_admin_route_rejects_students(client, student_headers):
     """Router-level require_admin: every /admin/* operation must answer 403 to a student."""
-    from geupsikdeul_backend.main import app
+    from app.main import app
 
     ops = [
         (

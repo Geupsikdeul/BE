@@ -7,14 +7,13 @@ from httpx import ASGITransport, AsyncClient
 from sqlalchemy.ext.asyncio import AsyncSession, async_sessionmaker, create_async_engine
 from sqlalchemy.pool import StaticPool
 
-import geupsikdeul_backend.models  # noqa: F401
-from geupsikdeul_backend.core import clock
-from geupsikdeul_backend.core.config import settings
-from geupsikdeul_backend.core.security import hash_password
-from geupsikdeul_backend.db.base import Base
-from geupsikdeul_backend.db.session import get_db
-from geupsikdeul_backend.main import app
-from geupsikdeul_backend.models import AllowedStudent, Student
+from app.core import clock
+from app.core.config import settings
+from app.core.security import hash_password
+from app.db.base import Base
+from app.db.session import get_db
+from app.main import app
+from app.models import AllowedStudent, Student
 
 API = "/api/v1"
 PASSWORD = "Secure1234!"

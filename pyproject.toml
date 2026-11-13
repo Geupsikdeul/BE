@@ -1,7 +1,7 @@
 [project]
 name = "geupsikdeul-backend"
 version = "0.1.0"
-description = "Add your description here"
+description = "학교 급식 서비스 (급식 메뉴 투표 · 조식/석식 신청) API"
 authors = [
     { name = "yungunho1110", email = "2010rjsgh@gmail.com" }
 ]
@@ -20,12 +20,13 @@ dependencies = [
     "uvicorn[standard]>=0.54.0",
 ]
 
-[project.scripts]
-geupsikdeul-backend = "geupsikdeul_backend:main"
-
 [build-system]
 requires = ["uv_build>=0.12.5,<0.13.0"]
 build-backend = "uv_build"
+
+[tool.uv.build-backend]
+module-name = "app"
+module-root = ""
 
 [dependency-groups]
 dev = [
