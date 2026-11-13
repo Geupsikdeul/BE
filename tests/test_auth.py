@@ -128,6 +128,9 @@ async def test_disabled_account(client, db):
 
 
 async def test_change_password(client, student_headers):
+    old = (
+        await client.post(f"{API}/auth/login", json={"student_no": "10312", "password": PASSWORD})
+    ).json()
     r = await client.patch(
         f"{API}/auth/password",
         headers=student_headers,
@@ -146,10 +149,19 @@ async def test_change_password(client, student_headers):
         json={"current_password": PASSWORD, "new_password": "NewSecure5678!"},
     )
     assert r.status_code == 204
+
+    # Tokens issued before the change are revoked (access and refresh).
+    r = await client.get(f"{API}/auth/me", headers=student_headers)
+    assert (r.status_code, _err(r)) == (401, "INVALID_TOKEN")
+    r = await client.post(f"{API}/auth/refresh", json={"refresh_token": old["refresh_token"]})
+    assert (r.status_code, _err(r)) == (401, "INVALID_TOKEN")
+
     r = await client.post(
         f"{API}/auth/login", json={"student_no": "10312", "password": "NewSecure5678!"}
     )
     assert r.status_code == 200
+    new_headers = {"Authorization": f"Bearer {r.json()['access_token']}"}
+    assert (await client.get(f"{API}/auth/me", headers=new_headers)).status_code == 200
 
 
 async def test_missing_token_and_validation_format(client):

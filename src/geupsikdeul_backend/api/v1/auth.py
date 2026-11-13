@@ -167,5 +167,6 @@ async def change_password(db: DB, user: CurrentUser, payload: PasswordChangeRequ
         raise AppError("WEAK_PASSWORD")
     user.password_hash = hash_password(payload.new_password)
     user.must_change_password = False
+    user.token_version += 1  # revoke every issued token, incl. the caller's; client re-logs in
     await db.commit()
     return Response(status_code=204)
