@@ -1,6 +1,6 @@
 from datetime import timedelta
 
-from geupsikdeul_backend.models import AllowedStudent
+from app.models import AllowedStudent
 
 from .conftest import API, PASSWORD, login, make_student
 
@@ -82,7 +82,7 @@ async def test_login_me_refresh(client, db):
 
 
 async def test_access_token_expires(client, db, fake_clock, monkeypatch):
-    from geupsikdeul_backend.core.config import settings
+    from app.core.config import settings
 
     monkeypatch.setattr(settings, "access_token_expire_minutes", 30)
     await make_student(db, "10312")
