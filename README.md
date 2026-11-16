@@ -99,6 +99,27 @@ FE는 `http://127.0.0.1:5500`에서 실행 (CORS 기본값에 포함). 프론트
 
 알레르기 표기는 `models/enums.py`의 `ALLERGENS` 18종으로 검증합니다.
 
+## AI (Claude)
+
+`app/ai/`는 [Geupsikdeul/AI](https://github.com/Geupsikdeul/AI)에서 옮겨온 코드입니다. 관리자 JWT로 보호되는 API:
+
+| API | 기능 |
+|---|---|
+| `POST /admin/ai/wish-analysis` | 희망 메뉴 묶기·요약 |
+| `POST /admin/ai/poll-candidates` | 공감·제안 수로 투표 후보 선정 (최근 식단과 겹치면 감점) |
+| `POST /admin/ai/poll-recommendations` | 학생 알레르기 집계(5명 이상 성분만)를 고려한 새 메뉴 추천 |
+| `GET /admin/ai/menu-catalog` | 식단 초안에 쓸 메뉴 ID 목록 |
+| `POST /admin/ai/menu-draft` | 식단 초안 + 규칙 검사 (저장하지 않음) |
+
+`ANTHROPIC_API_KEY`가 없으면 503 `AI_NOT_CONFIGURED`. 모델은 `AI_MODEL` (기본 `claude-haiku-5-5`).
+
+## Vercel 배포
+
+- Vercel이 `app/main.py`의 `app`을 자동 인식합니다. `vercel.json`은 함수 최대 실행 시간(60초, AI 호출용)만 지정.
+- 빌드 단계(`[tool.vercel.scripts] build`)에서 `alembic upgrade head` + 첫 관리자 생성(`FIRST_ADMIN_*`)을 실행합니다.
+- 필요한 환경변수: `DATABASE_URL`(Neon 등 `postgres://...` 그대로 넣어도 asyncpg 형식으로 변환), `JWT_SECRET_KEY`(필수, 없으면 기동 거부), `DEBUG=false`, `FIRST_ADMIN_LOGIN/NAME/PASSWORD`, `ANTHROPIC_API_KEY`(선택), `CORS_ORIGINS`(FE를 프록시로 붙이면 불필요).
+- 서버리스에서는 커넥션 풀을 쓰지 않습니다(`NullPool`).
+
 ## Docker
 
 ```bash
