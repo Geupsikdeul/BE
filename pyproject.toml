@@ -8,6 +8,7 @@ authors = [
 requires-python = ">=3.12"
 dependencies = [
     "alembic>=1.20.0",
+    "anthropic==2.5.0",
     "argon2-cffi>=25.1.0",
     "asyncpg>=0.32.0",
     "fastapi>=0.142.4",
@@ -47,3 +48,10 @@ target-version = "py312"
 
 [tool.ruff.lint]
 select = ["E", "F", "I", "UP"]
+
+[tool.ruff.lint.per-file-ignores]
+# Ported from Geupsikdeul/AI as-is; Korean prompt text kept verbatim.
+"app/ai/*" = ["E501"]
+
+[tool.vercel.scripts]
+build = "python -m app.vercel_build"
