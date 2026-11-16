@@ -1,6 +1,6 @@
 from datetime import datetime
 
-from sqlalchemy import Boolean, Integer, String, false, func, true
+from sqlalchemy import JSON, Boolean, Integer, String, false, func, true
 from sqlalchemy.orm import Mapped, mapped_column
 
 from app.db.base_class import Base
@@ -40,5 +40,7 @@ class Student(Base):
     token_version: Mapped[int] = mapped_column(Integer, default=0, server_default="0")
     failed_login_count: Mapped[int] = mapped_column(Integer, default=0, server_default="0")
     locked_until: Mapped[datetime | None] = mapped_column(UTCDateTime)
+    # None = 미등록, [] = 알레르기 없음 (프론트에서 다르게 안내)
+    allergies: Mapped[list[str] | None] = mapped_column(JSON)
     privacy_agreed_at: Mapped[datetime | None] = mapped_column(UTCDateTime)
     created_at: Mapped[datetime] = mapped_column(UTCDateTime, server_default=func.now())

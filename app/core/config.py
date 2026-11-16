@@ -20,7 +20,11 @@ class Settings(BaseSettings):
     login_lock_minutes: int = 10
 
     # Only the real frontend origins. Env format: CORS_ORIGINS=["https://app.example.com"]
-    cors_origins: list[str] = ["http://localhost:3000"]
+    cors_origins: list[str] = [
+        "http://localhost:3000",
+        "http://localhost:5500",
+        "http://127.0.0.1:5500",
+    ]
 
     # Polls: allow students to change their choice until the poll closes (spec 3.4)
     allow_vote_change: bool = True

@@ -5,6 +5,7 @@ DAY = {
     "breakfast_available": True,
     "breakfast_deadline": "2026-09-13T09:00:00Z",
     "breakfast_menu": "미역국, 계란말이, 김치, 흰쌀밥",
+    "breakfast_allergens": ["달걀", "대두"],
     "dinner_available": True,
     "dinner_deadline": "2026-09-14T03:00:00Z",
     "dinner_menu": "치킨마요덮밥, 유부장국, 단무지",
@@ -49,7 +50,9 @@ async def test_calendar_view(client, admin_headers, student_headers, fake_clock)
         "selectable_from": "2026-08-31",
         "deadline": "2026-09-13T09:00:00Z",
         "menu": "미역국, 계란말이, 김치, 흰쌀밥",
+        "allergens": ["달걀", "대두"],
     }
+    assert items["2026-09-14"]["dinner"]["allergens"] == []  # 미입력 → 빈 목록
     assert items["2026-09-15"]["dinner"]["reason"] == "exam_period"
     assert items["2026-09-16"]["breakfast"]["reason"] == "no_service"
     assert items["2026-09-19"]["breakfast"]["reason"] == "weekend"  # Saturday

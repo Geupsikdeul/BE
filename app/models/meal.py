@@ -19,11 +19,13 @@ class MealCalendar(Base):
     breakfast_deadline: Mapped[datetime | None] = mapped_column(UTCDateTime)
     breakfast_menu: Mapped[str | None] = mapped_column(Text)
     breakfast_reason: Mapped[str | None] = mapped_column(String(20))
+    breakfast_allergens: Mapped[list[str] | None] = mapped_column(JSON)
 
     dinner_available: Mapped[bool] = mapped_column(Boolean, default=False)
     dinner_deadline: Mapped[datetime | None] = mapped_column(UTCDateTime)
     dinner_menu: Mapped[str | None] = mapped_column(Text)
     dinner_reason: Mapped[str | None] = mapped_column(String(20))
+    dinner_allergens: Mapped[list[str] | None] = mapped_column(JSON)
 
 
 class MealSignup(Base):

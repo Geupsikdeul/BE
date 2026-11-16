@@ -33,6 +33,7 @@ class Slot:
     deadline: datetime | None
     menu: str | None
     reason: str | None
+    allergens: list[str] | None = None
 
 
 def slot_of(day: date, cal: MealCalendar | None, meal: MealType) -> Slot:
@@ -46,7 +47,9 @@ def slot_of(day: date, cal: MealCalendar | None, meal: MealType) -> Slot:
             UnavailableReason.weekend if day.weekday() >= 5 else UnavailableReason.no_service
         )
         return Slot(False, None, None, reason)
-    return Slot(True, deadline, getattr(cal, f"{meal}_menu"), None)
+    return Slot(
+        True, deadline, getattr(cal, f"{meal}_menu"), None, getattr(cal, f"{meal}_allergens")
+    )
 
 
 def slot_view(day: date, slot: Slot) -> MealSlot:
@@ -57,6 +60,7 @@ def slot_view(day: date, slot: Slot) -> MealSlot:
         selectable_from=selectable_from(day),
         deadline=slot.deadline,
         menu=slot.menu,
+        allergens=slot.allergens or [],
     )
 
 

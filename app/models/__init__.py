@@ -3,6 +3,7 @@
 from app.models.meal import MealCalendar, MealSignup, MealSignupSnapshot
 from app.models.poll import MealPoll, PollOption, Vote
 from app.models.student import AllowedStudent, Student
+from app.models.wish import Wish, WishLike
 
 __all__ = [
     "AllowedStudent",
@@ -13,4 +14,6 @@ __all__ = [
     "PollOption",
     "Student",
     "Vote",
+    "Wish",
+    "WishLike",
 ]

@@ -19,6 +19,7 @@ from app.core.security import (
 from app.crud import crud_student
 from app.models import AllowedStudent, Student
 from app.models.enums import Role
+from app.schemas.allergy import AllergyRead, AllergyUpdate
 from app.schemas.auth import (
     LoginRequest,
     MeResponse,
@@ -171,3 +172,15 @@ async def change_password(db: DB, user: CurrentUser, payload: PasswordChangeRequ
     user.token_version += 1  # revoke every issued token, incl. the caller's; client re-logs in
     await db.commit()
     return Response(status_code=204)
+
+
+@router.get("/me/allergies", response_model=AllergyRead)
+async def my_allergies(user: CurrentUser) -> AllergyRead:
+    return AllergyRead(allergies=user.allergies or [], registered=user.allergies is not None)
+
+
+@router.put("/me/allergies", response_model=AllergyRead)
+async def update_my_allergies(db: DB, user: CurrentUser, payload: AllergyUpdate) -> AllergyRead:
+    user.allergies = payload.allergies
+    await db.commit()
+    return AllergyRead(allergies=payload.allergies, registered=True)

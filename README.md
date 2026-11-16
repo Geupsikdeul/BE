@@ -82,6 +82,23 @@ Dockerfile, prestart.sh  # 컨테이너: 시작 전 alembic upgrade head + init_
 
 Add a new resource by: SQLAlchemy model in `models/` (export it from `models/__init__.py` and `db/base.py`), schema in `schemas/`, DB functions in `crud/`, endpoint in `api/v1/endpoints/` (use the `DB` / `CurrentUser` deps from `api/deps.py`), then register it in `api/v1/router.py`. Run `alembic revision --autogenerate` to generate the migration.
 
+## Frontend 연동 (Geupsikdeul/FE)
+
+```bash
+uv run alembic upgrade head
+uv run python -m app.cli seed-demo   # DEBUG=true일 때만. 학생 10312/demo1234, 관리자 teacher01/teacher1234
+uv run uvicorn app.main:app --reload
+```
+
+FE는 `http://127.0.0.1:5500`에서 실행 (CORS 기본값에 포함). 프론트용으로 추가된 API:
+
+- `GET /wishes`, `POST /wishes`, `POST /wishes/{id}/like` (토글), `DELETE /wishes/{id}` (본인), `DELETE /admin/wishes/{id}`
+- `GET·PUT /auth/me/allergies` — `registered: false`(미등록)와 `[]`(없음) 구분
+- `meal-calendar` 각 끼니에 `allergens` (관리자 일정 등록 시 `breakfast_allergens` / `dinner_allergens`)
+- `GET /polls/{id}`에 `total_votes` (참여 인원만, 선택지별 집계는 마감 후 `/result`)
+
+알레르기 표기는 `models/enums.py`의 `ALLERGENS` 18종으로 검증합니다.
+
 ## Docker
 
 ```bash

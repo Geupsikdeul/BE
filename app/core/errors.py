@@ -41,6 +41,8 @@ ERRORS: dict[str, tuple[int, str]] = {
     "SIGNUP_DEADLINE_PASSED": (403, "신청이 마감되었습니다."),
     "MEAL_NOT_AVAILABLE": (400, "해당 날짜에는 급식이 운영되지 않습니다."),
     "DATE_OUT_OF_RANGE": (400, "급식 제공일 14일 전부터 신청할 수 있습니다."),
+    # wishes
+    "WISH_NOT_FOUND": (404, "희망 메뉴를 찾을 수 없습니다."),
     # common
     "NOT_FOUND": (404, "요청한 리소스를 찾을 수 없습니다."),
     "CONFLICT": (409, "요청이 현재 데이터와 충돌합니다."),

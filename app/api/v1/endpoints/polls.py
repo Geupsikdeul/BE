@@ -8,7 +8,12 @@ from app.api.deps import DB, CurrentUser
 from app.core import clock
 from app.core.config import settings
 from app.core.errors import AppError
-from app.crud.crud_poll import get_published_poll, option_counts, total_votes_subquery
+from app.crud.crud_poll import (
+    get_published_poll,
+    option_counts,
+    total_votes,
+    total_votes_subquery,
+)
 from app.models import MealPoll, PollOption, Vote
 from app.models.enums import PollStatus
 from app.schemas.common import Page, PageParams
@@ -85,6 +90,7 @@ async def get_poll(db: DB, user: CurrentUser, poll_id: int) -> PollDetail:
         status=poll_status(poll),
         has_voted=my_option_id is not None,
         my_option_id=my_option_id,
+        total_votes=await total_votes(db, poll.id),
         options=[PollOptionRead.model_validate(o) for o in poll.options],
     )
 
