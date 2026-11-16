@@ -13,4 +13,6 @@ from app.models import (  # noqa: F401
     PollOption,
     Student,
     Vote,
+    Wish,
+    WishLike,
 )

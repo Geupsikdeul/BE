@@ -4,6 +4,7 @@ from typing import Literal
 from pydantic import AwareDatetime, BaseModel, Field
 
 from app.models.enums import MealType, UnavailableReason
+from app.schemas.allergy import AllergenList
 
 
 class MealSlot(BaseModel):
@@ -12,6 +13,7 @@ class MealSlot(BaseModel):
     selectable_from: date | None = None
     deadline: datetime | None = None
     menu: str | None = None
+    allergens: list[str] = Field(default_factory=list)
 
 
 class CalendarDay(BaseModel):
@@ -88,10 +90,12 @@ class CalendarEntryCreate(BaseModel):
     breakfast_deadline: AwareDatetime | None = None
     breakfast_menu: str | None = None
     breakfast_reason: UnavailableReason | None = None
+    breakfast_allergens: AllergenList | None = None
     dinner_available: bool = False
     dinner_deadline: AwareDatetime | None = None
     dinner_menu: str | None = None
     dinner_reason: UnavailableReason | None = None
+    dinner_allergens: AllergenList | None = None
 
 
 class CalendarEntryUpdate(BaseModel):
@@ -99,10 +103,12 @@ class CalendarEntryUpdate(BaseModel):
     breakfast_deadline: AwareDatetime | None = None
     breakfast_menu: str | None = None
     breakfast_reason: UnavailableReason | None = None
+    breakfast_allergens: AllergenList | None = None
     dinner_available: bool | None = None
     dinner_deadline: AwareDatetime | None = None
     dinner_menu: str | None = None
     dinner_reason: UnavailableReason | None = None
+    dinner_allergens: AllergenList | None = None
 
 
 class CalendarEntryRead(CalendarEntryCreate):

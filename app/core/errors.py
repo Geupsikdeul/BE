@@ -41,6 +41,17 @@ ERRORS: dict[str, tuple[int, str]] = {
     "SIGNUP_DEADLINE_PASSED": (403, "신청이 마감되었습니다."),
     "MEAL_NOT_AVAILABLE": (400, "해당 날짜에는 급식이 운영되지 않습니다."),
     "DATE_OUT_OF_RANGE": (400, "급식 제공일 14일 전부터 신청할 수 있습니다."),
+    # wishes
+    "WISH_NOT_FOUND": (404, "희망 메뉴를 찾을 수 없습니다."),
+    # ai
+    "AI_NOT_CONFIGURED": (503, "AI 기능이 설정되지 않았습니다."),
+    "AI_RATE_LIMITED": (429, "AI 요청이 많습니다. 잠시 후 다시 시도해 주세요."),
+    "AI_UNAVAILABLE": (503, "AI 서버에 연결하지 못했습니다."),
+    "AI_UPSTREAM_ERROR": (502, "AI 서버에서 오류가 발생했습니다."),
+    "AI_REFUSED": (502, "AI가 이 요청을 처리하지 않았습니다."),
+    "AI_OUTPUT_TRUNCATED": (502, "AI 응답이 너무 길어 중간에 끊겼습니다."),
+    "AI_BAD_RESPONSE": (502, "AI 응답을 해석하지 못했습니다."),
+    "UNKNOWN_MENU": (400, "목록에 없는 메뉴입니다."),
     # common
     "NOT_FOUND": (404, "요청한 리소스를 찾을 수 없습니다."),
     "CONFLICT": (409, "요청이 현재 데이터와 충돌합니다."),

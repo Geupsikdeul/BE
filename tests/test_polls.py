@@ -111,7 +111,7 @@ async def test_vote_lifecycle(client, db, admin_headers, student_headers, fake_c
     # detail: own choice visible, no per-option counts before close
     r = await client.get(f"{API}/polls/{pid}", headers=student_headers)
     d = r.json()
-    assert (d["has_voted"], d["my_option_id"]) == (True, o1)
+    assert (d["has_voted"], d["my_option_id"], d["total_votes"]) == (True, o1, 1)
     assert all("vote_count" not in o for o in d["options"])
 
     # change vote

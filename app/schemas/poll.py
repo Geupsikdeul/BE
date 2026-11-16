@@ -42,6 +42,7 @@ class PollDetail(BaseModel):
     status: PollStatus
     has_voted: bool
     my_option_id: int | None
+    total_votes: int  # 참여 인원만. 선택지별 집계는 마감 후 /result에서만
     options: list[PollOptionRead]
 
 
