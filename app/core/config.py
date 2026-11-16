@@ -33,6 +33,9 @@ class Settings(BaseSettings):
     debug: bool = True
 
     database_url: str = "postgresql+asyncpg://postgres:postgres@localhost:5432/geupsikdeul"
+    # Neon(Vercel 연동)은 DATABASE_URL에 pgbouncer 풀러 주소를 넣어요. asyncpg는 풀러의
+    # transaction 모드와 prepared statement가 충돌하므로, 직접 연결 주소가 있으면 그걸 써요.
+    database_url_unpooled: str | None = None
 
     # JWT — override JWT_SECRET_KEY in every real environment.
     jwt_secret_key: str = DEV_JWT_SECRET
@@ -70,6 +73,12 @@ class Settings(BaseSettings):
     @classmethod
     def _normalize_db_url(cls, v: str) -> str:
         return normalize_db_url(v)
+
+    @model_validator(mode="after")
+    def _prefer_unpooled_db(self) -> "Settings":
+        if self.database_url_unpooled:
+            self.database_url = normalize_db_url(self.database_url_unpooled)
+        return self
 
     @model_validator(mode="after")
     def _require_secret_on_vercel(self) -> "Settings":
