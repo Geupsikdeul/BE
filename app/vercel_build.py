@@ -6,8 +6,9 @@ import asyncio
 import logging
 import os
 
-from alembic import command
 from alembic.config import Config
+
+from alembic import command
 
 
 async def _seed() -> None:
