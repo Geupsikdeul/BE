@@ -13,26 +13,9 @@ from .wish_analysis import Category, WishGroup
 
 MIN_SHARED_STUDENTS = 5
 DEFAULT_LIMIT = 3
-Allergen = Literal[
-    "달걀",
-    "우유",
-    "메밀",
-    "땅콩",
-    "대두",
-    "밀",
-    "고등어",
-    "게",
-    "새우",
-    "돼지고기",
-    "복숭아",
-    "토마토",
-    "아황산류",
-    "호두",
-    "닭고기",
-    "쇠고기",
-    "오징어",
-    "조개류",
-]
+from app.models.enums import ALLERGENS  # noqa: E402
+
+Allergen = Literal[ALLERGENS]  # type: ignore[valid-type]  # BE 공통 19종
 
 SYSTEM = """당신은 학교 영양사를 돕는 메뉴 기획자입니다.
 학생들의 희망 메뉴와 알레르기 집계를 보고, 투표에 추가할 새 메뉴를 제안합니다.

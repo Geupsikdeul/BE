@@ -24,7 +24,7 @@ class UnavailableReason(StrEnum):
     no_service = "no_service"
 
 
-# 식품 알레르기 유발물질 표시 기준 (18종). 프론트·AI 모듈과 같은 표기를 쓴다.
+# 식품 알레르기 유발물질 19종. 순서 = 표시 번호(1~19). 프론트·AI와 같은 표기(1번은 "달걀"=난류).
 ALLERGENS: tuple[str, ...] = (
     "달걀",
     "우유",
@@ -44,4 +44,5 @@ ALLERGENS: tuple[str, ...] = (
     "쇠고기",
     "오징어",
     "조개류",
+    "잣",
 )
